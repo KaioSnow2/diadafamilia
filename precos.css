@@ -1,0 +1,79 @@
+/* Importação da fonte e ícones para manter a consistência */
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css');
+
+body {
+    font-family: 'Pacifico', cursive;
+    background-color: #f7e7e7;
+    color: #333;
+    text-align: center;
+    margin: 0;
+    padding: 20px;
+}
+
+header {
+    margin-bottom: 40px;
+}
+
+h1 {
+    font-size: 3em;
+    color: #e85a71;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.lista-precos {
+    max-width: 600px;
+    margin: 0 auto 50px auto;
+    background-color: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px dashed #ccc;
+    font-size: 1.2em;
+}
+
+.item:last-child {
+    border-bottom: none;
+}
+
+.item i {
+    color: #f67280;
+    font-size: 1.5em;
+    margin-right: 15px;
+}
+
+.preco {
+    font-weight: bold;
+    color: #e85a71;
+}
+
+.preco-com-detalhe {
+    font-size: 0.9em;
+    color: #e85a71;
+    text-align: right;
+    line-height: 1.2;
+}
+
+.botao-voltar {
+    display: inline-block;
+    background-color: #f67280;
+    color: white;
+    padding: 12px 25px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-size: 1.2em;
+    transition: transform 0.3s ease-in-out, background-color 0.3s;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.botao-voltar:hover {
+    background-color: #d84c60;
+    transform: scale(1.05);
+}

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finalizar Compra - Dia da Família</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Estilos adicionais para o formulário e pagamento */
+        .form-container {
+            max-width: 500px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .resumo-compra {
+            background-color: #f9f9f9;
+            border: 1px solid #eee;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+        .resumo-compra h3 {
+            margin-top: 0;
+            color: #555;
+        }
+        .botao-principal {
+            width: 100%;
+            margin-top: 20px;
+            border: none;
+            cursor: pointer;
+        }
+        .secao-pagamento h2 {
+            text-align: center;
+        }
+        .secao-pagamento img {
+            display: block;
+            margin: 20px auto;
+            max-width: 250px;
+            border: 1px solid #eee;
+            padding: 5px;
+        }
+        .chave-pix {
+            background-color: #e9e9e9;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            overflow-wrap: break-word;
+            margin-bottom: 20px;
+        }
+        .whatsapp-link {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Dia da Família na Escola</h1>
+        <p>Finalize sua compra</p>
+    </header>
+
+    <main>
+        <div class="container form-container">
+            <div id="secao-formulario">
+                <h2>Dados para Finalização</h2>
+                <p>Por favor, preencha o formulário para prosseguir com o pagamento.</p>
+
+                <form id="form-finalizacao">
+                    <div class="resumo-compra">
+                        <h3>Resumo do Pedido</h3>
+                        <p id="resumo-itens">Carregando...</p>
+                        <p>Total: <strong id="resumo-total">R$ 0,00</strong></p>
+                    </div>
+                
+                    <div class="form-group">
+                        <label for="nome_completo">Nome Completo (de quem fará o Pix):</label>
+                        <input type="text" id="nome_completo" name="nome_completo" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="nome_aluno">Nome do(a) aluno(a):</label>
+                        <input type="text" id="nome_aluno" name="nome_aluno" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="telefone">Telefone (com DDD):</label>
+                        <input type="tel" id="telefone" name="telefone" required>
+                    </div>
+                    
+                    <button type="submit" class="botao-principal">Confirmar Pedido</button>
+                </form>
+            </div>
+
+            <div id="secao-pagamento" style="display: none;">
+                <h2>Pagamento via Pix</h2>
+                <p>Para concluir seu pedido, por favor, realize o pagamento abaixo.</p>
+                <p style="text-align: center;">Valor total a pagar: <strong id="valor-a-pagar">R$ 0,00</strong></p>
+
+                <p style="text-align: center;">Escaneie o QR Code com o aplicativo do seu banco:</p>
+                <img id="qr-code-img" src="QRCODE.png" alt="QR Code Pix">
+                
+                <p style="text-align: center;">Ou utilize a chave Copia e Cola:</p>
+                <div class="chave-pix" id="chave-pix-texto">
+                    79377370000100
+                </div>
+
+                <div class="whatsapp-link">
+                    <p>Após o pagamento, clique no botão abaixo para nos enviar o comprovante:</p>
+                    <a href="#" id="botao-whatsapp" class="botao-principal">Enviar Comprovante e Pedido</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>
+    </footer>
+
+    <script>
+        // Esta função pega os dados do carrinho (armazenados temporariamente) e preenche o resumo
+        function carregarResumoDoPedido() {
+            const resumoItens = document.getElementById('resumo-itens');
+            const resumoTotal = document.getElementById('resumo-total');
+            const carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
+            let total = 0;
+            let listaItens = '';
+
+            if (carrinho.length > 0) {
+                carrinho.forEach(item => {
+                    listaItens += `${item.quantidade}x ${item.nome} (${item.precoUnitario.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })})\n`;
+                    total += item.quantidade * item.precoUnitario;
+                });
+                resumoItens.innerText = listaItens;
+            } else {
+                resumoItens.innerText = 'Nenhum item selecionado.';
+            }
+
+            resumoTotal.innerText = total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        }
+
+        // Esta função lida com a confirmação do pedido
+        function lidarComConfirmacaoDoPedido(event) {
+            event.preventDefault(); // Impede o envio do formulário
+
+            // Pega os dados do formulário e do carrinho
+            const nomeCompleto = document.getElementById('nome_completo').value;
+            const nomeAluno = document.getElementById('nome_aluno').value;
+            const telefone = document.getElementById('telefone').value;
+            const carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
+            
+            // Monta a lista de itens e calcula o total
+            let total = 0;
+            let listaItens = '';
+            carrinho.forEach(item => {
+                listaItens += `* ${item.quantidade}x ${item.nome} - R$ ${item.precoUnitario.toFixed(2).replace('.', ',')}\n`;
+                total += item.quantidade * item.precoUnitario;
+            });
+            const totalFormatado = total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+
+            // Monta a mensagem completa do pedido
+            const mensagem = `
+Olá! Acabei de fazer um pedido e já realizei o pagamento. Seguem os dados para a validação.
+
+*Dados do Pedido*
+Nome completo: ${nomeCompleto}
+Nome do(a) aluno(a): ${nomeAluno}
+Telefone: ${telefone}
+
+*Itens da Compra*
+${listaItens}
+*Total: ${totalFormatado}*
+
+Por favor, anexe o comprovante do Pix nesta conversa.
+`;
+            
+            // ATUALIZA o valor total na seção de pagamento ANTES de exibi-la
+            document.getElementById('valor-a-pagar').innerText = totalFormatado;
+
+            // Oculta a seção do formulário
+            document.getElementById('secao-formulario').style.display = 'none';
+
+            // Exibe a seção de pagamento
+            document.getElementById('secao-pagamento').style.display = 'block';
+
+            // Monta o link do WhatsApp com a mensagem do pedido
+            const seuNumeroDeTelefone = "5547997264745"; // SUBSTITUA PELO SEU NÚMERO
+            const mensagemCodificada = encodeURIComponent(mensagem.trim());
+            const urlWhatsApp = `https://api.whatsapp.com/send?phone=${seuNumeroDeTelefone}&text=${mensagemCodificada}`;
+            
+            // Atualiza o link do botão "Enviar Comprovante"
+            document.getElementById('botao-whatsapp').href = urlWhatsApp;
+        }
+
+        // Configura os eventos quando a página é carregada
+        window.onload = function() {
+            carregarResumoDoPedido();
+            document.getElementById('form-finalizacao').addEventListener('submit', lidarComConfirmacaoDoPedido);
+        };
+    </script>
+</body>
+</html>

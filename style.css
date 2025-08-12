@@ -1,0 +1,79 @@
+/* Importação de fontes temáticas e ícones de coração */
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css');
+
+body {
+    font-family: 'Pacifico', cursive; /* Fonte do estilo 'Dia da Família' */
+    background-color: #f7e7e7; /* Cor de fundo suave */
+    color: #333;
+    text-align: center;
+    margin: 0;
+    padding: 20px;
+}
+
+header {
+    margin-bottom: 40px;
+}
+
+.logo-container {
+    margin-bottom: 20px;
+}
+
+.logo {
+    max-width: 250px;
+    height: auto;
+}
+
+h1 {
+    font-size: 3em;
+    color: #e85a71;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.botoes {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 50px;
+}
+
+.botao-principal {
+    background-color: #f67280;
+    color: white;
+    padding: 15px 30px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-size: 1.5em;
+    transition: transform 0.3s ease-in-out, background-color 0.3s;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.botao-principal:hover {
+    background-color: #d84c60;
+    transform: scale(1.1); /* Efeito de aumentar no hover */
+}
+
+.galeria-animada {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+}
+
+.imagem-flutuante {
+    width: 200px;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    animation: flutuar 5s ease-in-out infinite alternate; /* Aplica a animação */
+}
+
+/* Animação para fazer as imagens "flutuarem" */
+@keyframes flutuar {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(-20px);
+    }
+}
